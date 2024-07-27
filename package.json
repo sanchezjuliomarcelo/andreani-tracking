@@ -1,6 +1,7 @@
 {
   "name": "andreani-tracking",
   "version": "1.0.0",
+  "description": "Proyecto de consulta de guías de Andreani",
   "main": "index.mjs",
   "scripts": {
     "start": "node index.mjs"
@@ -8,6 +9,9 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "node-fetch": "^3.0.0"
-  }
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7"
+  },
+  "author": "",
+  "license": "ISC"
 }
