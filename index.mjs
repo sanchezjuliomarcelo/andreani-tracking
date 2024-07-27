@@ -43,6 +43,7 @@ app.get('/login', async (req, res) => {
   }
 });
 
+// Vercel asignará automáticamente el puerto, por lo que no necesitas configurar PORT en Vercel
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

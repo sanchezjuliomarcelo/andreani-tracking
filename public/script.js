@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
         const messageDiv = document.getElementById('message');
   
+        // Limpiar las clases de mensaje previas
+        messageDiv.classList.remove('alert-success', 'alert-danger');
+  
         if (result.success) {
           messageDiv.textContent = result.message;
           messageDiv.classList.add('alert', 'alert-success');
