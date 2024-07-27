@@ -70,5 +70,70 @@ document.addEventListener('DOMContentLoaded', () => {
         resultDiv.textContent = `Error: ${error.message}`;
       }
     });
+  
+    document.getElementById('trazasButton').addEventListener('click', async () => {
+      const trackingNumber = document.getElementById('trackingNumber').value;
+      const token = sessionStorage.getItem('andreaniToken');
+  
+      if (!token) {
+        alert('Debe autenticarse primero.');
+        return;
+      }
+  
+      const myHeaders = new Headers();
+      myHeaders.append("x-authorization-token", token);
+  
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+  
+      try {
+        const response = await fetch(`/proxy/v2/envios/${trackingNumber}/trazas`, requestOptions);
+        const result = await response.json();
+        console.log('API response received:', result);
+  
+        const trazasResultDiv = document.getElementById('trazasResult');
+        
+        // Crear una tabla para mostrar los eventos de trazas
+        let tableContent = `
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Traducción</th>
+                <th>Sucursal</th>
+                <th>Ciclo</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+  
+        result.eventos.forEach(evento => {
+          tableContent += `
+            <tr>
+              <td>${evento.fecha}</td>
+              <td>${evento.estado}</td>
+              <td>${evento.traduccion}</td>
+              <td>${evento.sucursal}</td>
+              <td>${evento.ciclo}</td>
+            </tr>
+          `;
+        });
+  
+        tableContent += `
+            </tbody>
+          </table>
+        `;
+  
+        trazasResultDiv.innerHTML = tableContent;
+      } catch (error) {
+        console.error('Error:', error);
+        const trazasResultDiv = document.getElementById('trazasResult');
+        trazasResultDiv.textContent = `Error: ${error.message}`;
+      }
+    });
   });
   
