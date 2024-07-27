@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('loginTest').addEventListener('click', async () => {
       try {
-        const response = await fetch('/login');
+        const response = await fetch('/api/login');
         const result = await response.json();
         const messageDiv = document.getElementById('message');
         
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.classList.remove('alert-success', 'alert-danger');
   
         if (result.success) {
-          // Mostrar mensaje de autenticación correcta
           messageDiv.textContent = result.message;
           messageDiv.classList.add('alert', 'alert-success');
   
@@ -175,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
         console.log('API response received:', result);
   
-        const resultDiv = document.getElementById('result');
+        const resultDiv = document.getElementById('constanciaResult');
         
         // Crear el contenido HTML para mostrar y descargar la imagen
         let multimediaContent = '';
@@ -190,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultDiv.innerHTML = multimediaContent;
       } catch (error) {
         console.error('Error:', error);
-        const resultDiv = document.getElementById('result');
+        const resultDiv = document.getElementById('constanciaResult');
         resultDiv.textContent = `Error: ${error.message}`;
       }
     });
@@ -199,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('trackingNumber').value = '';
       document.getElementById('result').innerHTML = '';
       document.getElementById('trazasResult').innerHTML = '';
+      document.getElementById('constanciaResult').innerHTML = '';
       document.getElementById('message').innerHTML = '';
     });
   });

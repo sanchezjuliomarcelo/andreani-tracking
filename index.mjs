@@ -7,14 +7,31 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 const app = express();
 const __dirname = path.resolve();
 
+// Middleware para parsear el body de las requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'login.html'));
+});
+
+app.post('/login', (req, res) => {
+  const { usuario, contrasena } = req.body;
+  if (usuario === process.env.USUARIO && contrasena === process.env.CONTRASENA) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(401).json({ success: false, message: 'Usuario o clave incorrectos' });
+  }
+});
+
+app.get('/app', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-app.get('/login', async (req, res) => {
-  console.log('Login route accessed');  // Línea de depuración
+app.get('/api/login', async (req, res) => {
   const user = process.env.API_USER;
   const password = process.env.API_PASSWORD;
 
@@ -33,13 +50,11 @@ app.get('/login', async (req, res) => {
     const response = await fetch("https://apis.andreani.com/login", requestOptions);
     if (response.ok) {
       const result = await response.text();
-      console.log('API response received');  // Línea de depuración
       res.status(200).json({ success: true, message: "Autenticación correcta", token: result });
     } else {
       res.status(response.status).json({ success: false, message: "Autenticación fallida" });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ success: false, message: "Error durante la autenticación" });
   }
 });
