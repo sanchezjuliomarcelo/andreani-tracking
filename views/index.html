@@ -5,23 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Andreani Tracking</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
- </head>
+</head>
 <body>
   <div class="container mt-5">
     <h1 class="text-center">Consulta de Guía - Andreani</h1>
-    <button id="loginTest" class="btn btn-secondary btn-block mt-4">Probar Autenticación</button>
+    <button id="loginTest" class="btn btn-secondary btn-block mt-4">Autenticación</button>
     <form id="trackingForm" class="mt-4">
       <div class="form-group">
         <label for="trackingNumber">Número de Guía</label>
         <input type="text" class="form-control" id="trackingNumber" placeholder="Ingrese el número de guía" required>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+      <div class="row">
+        <div class="col">
+          <button id="buscar" class="btn btn-primary btn-block">Buscar</button>
+        </div>
+        <div class="col">
+          <button id="trazasButton" class="btn btn-info btn-block">Consultar Trazas</button>
+        </div>
+        <div class="col">
+          <button id="constancia" class="btn btn-info btn-block">Remito</button>
+        </div>
+        <div class="col">
+          <button id="reset" class="btn btn-danger btn-block">Borrar</button>
+        </div>
+      </div>
     </form>
-    <button id="trazasButton" class="btn btn-info btn-block mt-4">Consultar Trazas</button>
     <div id="result" class="mt-4"></div>
     <div id="trazasResult" class="mt-4"></div>
     <div id="message" class="mt-4"></div>
   </div>
+  <footer class="text-center mt-5">
+    <p>Servicio de consulta de guías Andreani</p>
+    <p>Desarrollado por Julio Sanchez para Tiendas Digitales SRL</p>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

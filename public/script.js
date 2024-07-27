@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-    document.getElementById('trackingForm').addEventListener('submit', async (event) => {
+    document.getElementById('buscar').addEventListener('click', async (event) => {
       event.preventDefault();
       const trackingNumber = document.getElementById('trackingNumber').value;
       const token = sessionStorage.getItem('andreaniToken');
@@ -54,15 +54,24 @@ document.addEventListener('DOMContentLoaded', () => {
   
         const resultDiv = document.getElementById('result');
   
+        // Asegurarse de que los campos existen antes de acceder a ellos
+        const estado = result.estado || 'N/A';
+        const tipo = result.tipo || 'N/A';
+        const fechaCreacion = result.fechaCreacion || 'N/A';
+        const descripcionServicio = result.descripcionServicio || 'N/A';
+        const numeroDeBulto = result.bultos?.[0]?.numeroDeBulto || 'N/A';
+        const numeroDeEnvio = result.numeroDeEnvio || 'N/A';
+        const totalizador = result.totalizador || 'N/A';
+  
         // Mostrar los datos en pantalla
         resultDiv.innerHTML = `
-          <p><strong>Estado:</strong> ${result.estado}</p>
-          <p><strong>Tipo:</strong> ${result.tipo}</p>
-          <p><strong>Fecha de Creación:</strong> ${result.fechaCreacion}</p>
-          <p><strong>Descripción del Servicio:</strong> ${result.descripcionServicio}</p>
-          <p><strong>Número de Bulto:</strong> ${result.numeroDeBulto}</p>
-          <p><strong>Número de Envío:</strong> ${result.numeroDeEnvio}</p>
-          <p><strong>Totalizador:</strong> ${result.totalizador}</p>
+          <p><strong>Estado:</strong> ${estado}</p>
+          <p><strong>Tipo:</strong> ${tipo}</p>
+          <p><strong>Fecha de Creación:</strong> ${fechaCreacion}</p>
+          <p><strong>Descripción del Servicio:</strong> ${descripcionServicio}</p>
+          <p><strong>Número de Bulto:</strong> ${numeroDeBulto}</p>
+          <p><strong>Número de Envío:</strong> ${numeroDeEnvio}</p>
+          <p><strong>Totalizador:</strong> ${totalizador}</p>
         `;
       } catch (error) {
         console.error('Error:', error);
@@ -71,7 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-    document.getElementById('trazasButton').addEventListener('click', async () => {
+    document.getElementById('trazasButton').addEventListener('click', async (event) => {
+      event.preventDefault();
       const trackingNumber = document.getElementById('trackingNumber').value;
       const token = sessionStorage.getItem('andreaniToken');
   
@@ -112,13 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
   
         result.eventos.forEach(evento => {
+          const fecha = evento.Fecha || 'N/A';
+          const estado = evento.Estado || 'N/A';
+          const traduccion = evento.Traduccion || 'N/A';
+          const sucursal = evento.Sucursal || 'N/A';
+          const ciclo = evento.Ciclo || 'N/A';
           tableContent += `
             <tr>
-              <td>${evento.fecha}</td>
-              <td>${evento.estado}</td>
-              <td>${evento.traduccion}</td>
-              <td>${evento.sucursal}</td>
-              <td>${evento.ciclo}</td>
+              <td>${fecha}</td>
+              <td>${estado}</td>
+              <td>${traduccion}</td>
+              <td>${sucursal}</td>
+              <td>${ciclo}</td>
             </tr>
           `;
         });
@@ -134,6 +149,57 @@ document.addEventListener('DOMContentLoaded', () => {
         const trazasResultDiv = document.getElementById('trazasResult');
         trazasResultDiv.textContent = `Error: ${error.message}`;
       }
+    });
+  
+    document.getElementById('constancia').addEventListener('click', async (event) => {
+      event.preventDefault();
+      const trackingNumber = document.getElementById('trackingNumber').value;
+      const token = sessionStorage.getItem('andreaniToken');
+  
+      if (!token) {
+        alert('Debe autenticarse primero.');
+        return;
+      }
+  
+      const myHeaders = new Headers();
+      myHeaders.append("x-authorization-token", token);
+  
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+  
+      try {
+        const response = await fetch(`/proxy/v1/envios/${trackingNumber}/multimedia`, requestOptions);
+        const result = await response.json();
+        console.log('API response received:', result);
+  
+        const resultDiv = document.getElementById('result');
+        
+        // Crear el contenido HTML para mostrar y descargar la imagen
+        let multimediaContent = '';
+        result.multimedia.forEach(item => {
+          multimediaContent += `
+            <p><strong>${item.meta}:</strong></p>
+            <p><a href="${item.cotenido}" target="_blank">Ver/Descargar</a></p>
+            <img src="${item.cotenido}" alt="${item.meta}" style="max-width: 100%;">
+          `;
+        });
+  
+        resultDiv.innerHTML = multimediaContent;
+      } catch (error) {
+        console.error('Error:', error);
+        const resultDiv = document.getElementById('result');
+        resultDiv.textContent = `Error: ${error.message}`;
+      }
+    });
+  
+    document.getElementById('reset').addEventListener('click', () => {
+      document.getElementById('trackingNumber').value = '';
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('trazasResult').innerHTML = '';
+      document.getElementById('message').innerHTML = '';
     });
   });
   
