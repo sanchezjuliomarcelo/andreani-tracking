@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
   
       try {
-        const response = await fetch(`https://apis.andreani.com/v2/ordenes-de-envio/${trackingNumber}`, requestOptions);
+        const response = await fetch(`/proxy/v2/ordenes-de-envio/${trackingNumber}`, requestOptions);
         const result = await response.text();
         console.log('API response received:', result);
   

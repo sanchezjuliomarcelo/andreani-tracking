@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import fetch from 'node-fetch';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const app = express();
 const __dirname = path.resolve();
@@ -43,7 +44,21 @@ app.get('/login', async (req, res) => {
   }
 });
 
-// Vercel asignará automáticamente el puerto, por lo que no necesitas configurar PORT en Vercel
+// Configurar el proxy
+app.use('/proxy', createProxyMiddleware({
+  target: 'https://apis.andreani.com',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/proxy': '',
+  },
+  onProxyReq: (proxyReq, req, res) => {
+    const token = req.headers['x-authorization-token'];
+    if (token) {
+      proxyReq.setHeader('x-authorization-token', token);
+    }
+  }
+}));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
