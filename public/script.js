@@ -49,11 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
   
       try {
         const response = await fetch(`/proxy/v2/ordenes-de-envio/${trackingNumber}`, requestOptions);
-        const result = await response.text();
+        const result = await response.json();
         console.log('API response received:', result);
   
         const resultDiv = document.getElementById('result');
-        resultDiv.textContent = result;
+  
+        // Mostrar los datos en pantalla
+        resultDiv.innerHTML = `
+          <p><strong>Estado:</strong> ${result.estado}</p>
+          <p><strong>Tipo:</strong> ${result.tipo}</p>
+          <p><strong>Fecha de Creación:</strong> ${result.fechaCreacion}</p>
+          <p><strong>Descripción del Servicio:</strong> ${result.descripcionServicio}</p>
+          <p><strong>Número de Bulto:</strong> ${result.numeroDeBulto}</p>
+          <p><strong>Número de Envío:</strong> ${result.numeroDeEnvio}</p>
+          <p><strong>Totalizador:</strong> ${result.totalizador}</p>
+        `;
       } catch (error) {
         console.error('Error:', error);
         const resultDiv = document.getElementById('result');
