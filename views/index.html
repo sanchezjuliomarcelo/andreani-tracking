@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Andreani Tracking</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
 <body>
   <div class="container mt-5">
@@ -17,10 +18,19 @@
       <button type="submit" class="btn btn-primary btn-block">Buscar</button>
     </form>
     <div id="result" class="mt-4"></div>
+    <button id="loginTest" class="btn btn-secondary btn-block mt-4">Probar Autenticación</button>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById('loginTest').addEventListener('click', () => {
+      fetch('/login')
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
 </body>
 </html>
