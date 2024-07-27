@@ -30,12 +30,16 @@ app.get('/login', async (req, res) => {
 
   try {
     const response = await fetch("https://apis.andreani.com/login", requestOptions);
-    const result = await response.text();
-    console.log('API response received');  // Línea de depuración
-    res.status(200).send(result);
+    if (response.ok) {
+      const result = await response.text();
+      console.log('API response received');  // Línea de depuración
+      res.status(200).json({ success: true, message: "Autenticación correcta", token: result });
+    } else {
+      res.status(response.status).json({ success: false, message: "Autenticación fallida" });
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error during authentication');
+    res.status(500).json({ success: false, message: "Error durante la autenticación" });
   }
 });
 
