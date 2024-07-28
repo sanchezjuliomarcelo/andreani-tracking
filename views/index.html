@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andreani Tracking</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-  <div class="container mt-5">
-    <h1 class="text-center">Consulta de Guía - Andreani</h1>
-    <button id="loginTest" class="btn btn-secondary btn-block mt-4">Autenticación</button>
-    <form id="trackingForm" class="mt-4">
-      <div class="form-group">
-        <label for="trackingNumber">Número de Guía</label>
-        <input type="text" class="form-control" id="trackingNumber" placeholder="Ingrese el número de guía" required>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andreani Tracking</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">Consulta de Guía - Andreani</h1>
+      <button id="loginTest" class="btn btn-secondary btn-block mt-4">
+        Autenticación
+      </button>
+      <form id="trackingForm" class="mt-4">
+        <div class="form-group">
+          <label for="trackingNumber">Número de Guía</label>
+          <input type="text" class="form-control" id="trackingNumber" placeholder="Ingrese el número de guía" required />
+        </div>
+        <div class="row">
+          <div class="col">
+            <button id="buscar" class="btn btn-primary btn-block">Buscar</button>
+          </div>
+          <div class="col">
+            <button id="trazasButton" class="btn btn-info btn-block">Consultar Trazas</button>
+          </div>
+          <div class="col">
+            <button id="constancia" class="btn btn-info btn-block">Remito</button>
+          </div>
+          <div class="col">
+            <button id="reset" class="btn btn-danger btn-block">Borrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <section>
+      <div class="container mt-5">
+        <div id="message" class="mt-4"></div>
+        <div id="result" class="mt-4"></div>
+        <div id="trazasResult" class="mt-4"></div>
+        <div id="constanciaResult" class="mt-4"></div>
       </div>
-      <div class="row">
-        <div class="col">
-          <button id="buscar" class="btn btn-primary btn-block">Buscar</button>
-        </div>
-        <div class="col">
-          <button id="trazasButton" class="btn btn-info btn-block">Consultar Trazas</button>
-        </div>
-        <div class="col">
-          <button id="constancia" class="btn btn-info btn-block">Remito</button>
-        </div>
-        <div class="col">
-          <button id="reset" class="btn btn-danger btn-block">Borrar</button>
-        </div>
-      </div>
-    </form>
-    <div id="result" class="mt-4"></div>
-    <div id="trazasResult" class="mt-4"></div>
-    <div id="message" class="mt-4"></div>
-  </div>
-
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="script.js"></script>
-</body>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
